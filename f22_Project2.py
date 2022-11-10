@@ -91,7 +91,7 @@ def get_listing_information(listing_id):
     policy = policy_num.text
     if "pending" in policy.lower():
         final_policy_num = "Pending"
-    elif "exempt" in policy.lower():
+    elif "exempt" in policy.lower() or "not needed" in policy.lower():
         final_policy_num = "Exempt"
     else:
         final_policy_num = policy.lstrip("Policy number: ")
@@ -200,12 +200,21 @@ def check_policy_numbers(data):
     ]
 
     """
-    policy_1 = []
-    policy_2 = []
-    regex = r'^STR-000[0-9]{4}$'
-    for i in data:
-        policy_num = i[3]
-        #print(policy_num)
+    policy = []
+    regex = r'^STR-000[0-9]{4}$|^20[0-9]{2}-00[0-9]{4}STR$'
+    for line in data:
+        x = line[3]
+        #print(x)
+        found_nums = re.findall(regex, x)
+        if x == "Pending":
+            continue
+        if x == "Exempt":
+            continue
+        if len(found_nums) == 0:
+            policy.append(line[2])
+        
+    print(policy)
+    return policy
 
 
 def extra_credit(listing_id):
@@ -313,20 +322,21 @@ class TestCases(unittest.TestCase):
 
 
 
-#     def test_check_policy_numbers(self):
-#         # call get_detailed_listing_database on "html_files/mission_district_search_results.html"
-#         # and save the result to a variable
-#         detailed_database = get_detailed_listing_database("html_files/mission_district_search_results.html")
-#         # call check_policy_numbers on the variable created above and save the result as a variable
-#         invalid_listings = check_policy_numbers(detailed_database)
-#         # check that the return value is a list
-#         self.assertEqual(type(invalid_listings), list)
-#         # check that there is exactly one element in the string
-
-#         # check that the element in the list is a string
-
-#         # check that the first element in the list is '16204265'
-#         pass    
+    def test_check_policy_numbers(self):
+        # call get_detailed_listing_database on "html_files/mission_district_search_results.html"
+        # and save the result to a variable
+        detailed_database = get_detailed_listing_database("html_files/mission_district_search_results.html")
+        # call check_policy_numbers on the variable created above and save the result as a variable
+        invalid_listings = check_policy_numbers(detailed_database)
+        # check that the return value is a list
+        self.assertEqual(type(invalid_listings), list)
+        # check that there is exactly one element in the string
+        self.assertEqual(len(invalid_listings), 1)
+        # check that the element in the list is a string
+        for i in invalid_listings:
+            self.assertEqual(type(i), str)
+        # check that the first element in the list is '16204265'
+        self.assertEqual(invalid_listings[0], '16204265')
 
 
 if __name__ == '__main__':
