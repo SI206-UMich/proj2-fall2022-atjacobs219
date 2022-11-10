@@ -35,8 +35,8 @@ def get_listings_from_search_results(html_file):
         titles.append(div_tags[count].text.strip())
         cost.append(int(price_tags[count].text.strip().lstrip("$")))
         count += 1
-    print(titles)
-    print(cost)
+    # print(titles)
+    # print(cost)
 
     id_list = []
     for i in div_tags:
@@ -45,7 +45,7 @@ def get_listings_from_search_results(html_file):
         new = ids.split('_')
         #print(new)
         id_list.append(new[1])
-    print(id_list)
+    # print(id_list)
 
     y = 0
     new_list = []
@@ -53,7 +53,7 @@ def get_listings_from_search_results(html_file):
         tuple_1 = (titles[y], cost[y], id_list[y])
         new_list.append(tuple_1)
         y += 1
-    print(new_list)
+    # print(new_list)
 
 get_listings_from_search_results("html_files/mission_district_search_results.html")
 
@@ -114,9 +114,9 @@ def get_listing_information(listing_id):
 
     tup = (final_policy_num, final_place_type, final_bed_num)
     return tup
+    print(tup)
 
 get_listing_information(50010586)
-
 
 
 def get_detailed_listing_database(html_file):
@@ -133,7 +133,10 @@ def get_detailed_listing_database(html_file):
         ...
     ]
     """
-    pass
+    # compiled_list = []
+    # compiled_tup = (get_listings_from_search_results(html_file), get_listing_information(html_file))
+    # compiled_list.append(compiled_tup)
+    # print(compiled_list)
 
 
 def write_csv(data, filename):
@@ -201,45 +204,45 @@ def extra_credit(listing_id):
 
 
 
-# class TestCases(unittest.TestCase):
+class TestCases(unittest.TestCase):
 
-#     def test_get_listings_from_search_results(self):
-#         # call get_listings_from_search_results("html_files/mission_district_search_results.html")
-#         # and save to a local variable
-#         listings = get_listings_from_search_results("html_files/mission_district_search_results.html")
-#         # check that the number of listings extracted is correct (20 listings)
-#         self.assertEqual(len(listings), 20)
-#         # check that the variable you saved after calling the function is a list
-#         self.assertEqual(type(listings), list)
-#         # check that each item in the list is a tuple
+    def test_get_listings_from_search_results(self):
+        # call get_listings_from_search_results("html_files/mission_district_search_results.html")
+        # and save to a local variable
+        listings = get_listings_from_search_results("html_files/mission_district_search_results.html")
+        # check that the number of listings extracted is correct (20 listings)
+        self.assertEqual(len(listings), 20)
+        # check that the variable you saved after calling the function is a list
+        self.assertEqual(type(listings), list)
+        # check that each item in the list is a tuple
 
-#         # check that the first title, cost, and listing id tuple is correct (open the search results html and find it)
+        # check that the first title, cost, and listing id tuple is correct (open the search results html and find it)
 
-#         # check that the last title is correct (open the search results html and find it)
-#         pass
+        # check that the last title is correct (open the search results html and find it)
+        pass
 
-#     def test_get_listing_information(self):
-#         html_list = ["1623609",
-#                      "1944564",
-#                      "1550913",
-#                      "4616596",
-#                      "6600081"]
-#         # call get_listing_information for i in html_list:
-#         listing_informations = [get_listing_information(id) for id in html_list]
-#         # check that the number of listing information is correct (5)
-#         self.assertEqual(len(listing_informations), 5)
-#         for listing_information in listing_informations:
-#             # check that each item in the list is a tuple
-#             self.assertEqual(type(listing_information), tuple)
-#             # check that each tuple has 3 elements
-#             self.assertEqual(len(listing_information), 3)
-#             # check that the first two elements in the tuple are string
-#             self.assertEqual(type(listing_information[0]), str)
-#             self.assertEqual(type(listing_information[1]), str)
-#             # check that the third element in the tuple is an int
-#             self.assertEqual(type(listing_information[2]), int)
-#         # check that the first listing in the html_list has policy number 'STR-0001541'
-
+    def test_get_listing_information(self):
+        html_list = ["1623609",
+                     "1944564",
+                     "1550913",
+                     "4616596",
+                     "6600081"]
+        # call get_listing_information for i in html_list:
+        listing_informations = [get_listing_information(id) for id in html_list]
+        # check that the number of listing information is correct (5)
+        self.assertEqual(len(listing_informations), 5)
+        for listing_information in listing_informations:
+            # check that each item in the list is a tuple
+            self.assertEqual(type(listing_information), tuple)
+            # check that each tuple has 3 elements
+            self.assertEqual(len(listing_information), 3)
+            # check that the first two elements in the tuple are string
+            self.assertEqual(type(listing_information[0]), str)
+            self.assertEqual(type(listing_information[1]), str)
+            # check that the third element in the tuple is an int
+            self.assertEqual(type(listing_information[2]), int)
+        # check that the first listing in the html_list has policy number 'STR-0001541'
+            # self.assertEqual(listing_information[0])
 #         # check that the last listing in the html_list is a "Private Room"
 
 #         # check that the third listing has one bedroom
