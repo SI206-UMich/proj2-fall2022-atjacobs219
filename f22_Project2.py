@@ -28,6 +28,7 @@ def get_listings_from_search_results(html_file):
     soup = BeautifulSoup(file, 'html.parser')
     div_tags = soup.find_all('div', class_ = 't1jojoys')
     price_tags = soup.find_all('span', class_ = '_tyxjp1')
+    file.close()
     titles = []
     cost = []
     count = 0
@@ -54,6 +55,7 @@ def get_listings_from_search_results(html_file):
         new_list.append(tuple_1)
         y += 1
     # print(new_list)
+    return new_list
 
 get_listings_from_search_results("html_files/mission_district_search_results.html")
 
@@ -133,8 +135,9 @@ def get_detailed_listing_database(html_file):
         ...
     ]
     """
+    # with open(html_file) as file:
+
     # compiled_list = []
-    # compiled_tup = (get_listings_from_search_results(html_file), get_listing_information(html_file))
     # compiled_list.append(compiled_tup)
     # print(compiled_list)
 
@@ -161,7 +164,12 @@ def write_csv(data, filename):
 
     This function should not return anything.
     """
-    pass
+    # header = ['Listing Title', 'Cost','Listing ID', 'Policy Number', 'Place Type', 'Number of Bedrooms']
+    # with open('csv_file', 'w') as f:
+    #     writer = csv.writer(f)
+    #     writer.writerow(header)
+
+
 
 
 def check_policy_numbers(data):
