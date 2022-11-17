@@ -234,19 +234,27 @@ def extra_credit(listing_id):
     listing_file = "html_files/listing_" + str(listing_id) + "_reviews.html"
     file = open(listing_file, 'r')
     files = file.read()
-    soup = BeautifulSoup(files, 'html.parser')
     file.close()
-    review = soup.find('span', class_ = '_11eqlma4 dir dir-ltr')
-    # review_num = review.text
-    number = int(review_num[-11:-8])
-    if number < 90:
-        #print(False)
-        return False
-    elif number > 90:
-        #print(True)
-        return True
-    
-# extra_credit('16204265')
+    soup = BeautifulSoup(files, 'html.parser')
+    review = soup.find_all('li', class_ = '_1f1oir5')
+    dates = []
+    for i in range(len(review)):
+        dates.append(re.findall(r'\s\d{4}', review[i].text))
+    num_dict = {}
+    for i in range(len(dates)):
+        if dates[i][0] in num_dict:
+            num_dict[dates[i][0]]+= 1
+        else:
+            num_dict[dates[i][0]]=1
+    for i in num_dict:
+        if num_dict[i] > 90:
+            return False
+        # elif num_dict[i] < 90:
+    print(dates)
+    print(num_dict)
+    return True
+
+
 
 
 class TestCases(unittest.TestCase):
@@ -353,6 +361,13 @@ class TestCases(unittest.TestCase):
             self.assertEqual(type(i), str)
         # check that the first element in the list is '16204265'
         self.assertEqual(invalid_listings[0], '16204265')
+
+    def test_extra_credit(self):
+        html_list = ["1944564",
+                     "16204265"]
+        listing_informations = [extra_credit(id) for id in html_list]
+        print(listing_informations)
+
 
 
 if __name__ == '__main__':
