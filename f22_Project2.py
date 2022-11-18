@@ -36,8 +36,8 @@ def get_listings_from_search_results(html_file):
         titles.append(div_tags[count].text.strip())
         cost.append(int(price_tags[count].text.strip().lstrip("$")))
         count += 1
-    # print(titles)
-    # print(cost)
+    print(titles)
+    print(cost)
 
     id_list = []
     for i in div_tags:
